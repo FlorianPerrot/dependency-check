@@ -1,8 +1,8 @@
 FROM openjdk:14-alpine3.10
 
-ARG VERSION=5.3.0-release
-ARG POSTGRES_DRIVER_VERSION=42.2.6
-ARG MYSQL_DRIVER_VERSION=8.0.17
+ARG VERSION=6.0.3-release
+ARG POSTGRES_DRIVER_VERSION=42.2.18
+ARG MYSQL_DRIVER_VERSION=8.0.22
 
 RUN apk update                                                                                       && \
     apk add --no-cache --virtual .build-deps curl tar                                                && \
