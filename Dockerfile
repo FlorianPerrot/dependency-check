@@ -5,7 +5,7 @@ ARG POSTGRES_DRIVER_VERSION=42.2.18
 ARG MYSQL_DRIVER_VERSION=8.0.22
 
 RUN apk update                                                                                       && \
-    apk add --no-cache --virtual .build-deps curl tar                                                && \
+    apk add --no-cache --virtual .build-deps curl tar git                                            && \
     apk add --no-cache ruby ruby-rdoc                                                                && \
     gem install bundle-audit                                                                         && \
     bundle audit update                                                                              && \
