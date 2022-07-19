@@ -1,15 +1,15 @@
-FROM openjdk:14-alpine3.10
+FROM openjdk:19-alpine
 
-ARG VERSION=6.0.3-release
-ARG POSTGRES_DRIVER_VERSION=42.2.18
-ARG MYSQL_DRIVER_VERSION=8.0.22
+ARG VERSION=7.1.1
+ARG POSTGRES_DRIVER_VERSION=42.2.19
+ARG MYSQL_DRIVER_VERSION=8.0.23
 
 RUN apk update                                                                                       && \
     apk add --no-cache --virtual .build-deps curl tar git                                            && \
     apk add --no-cache ruby ruby-rdoc                                                                && \
     gem install bundle-audit                                                                         && \
     bundle audit update                                                                              && \
-    wget https://bintray.com/jeremy-long/owasp/download_file?file_path=dependency-check-${VERSION}.zip -O dependency-check.zip && \
+    wget https://github.com/jeremylong/DependencyCheck/releases/download/v${VERSION}/dependency-check-${VERSION}-release.zip -O dependency-check.zip && \
     unzip dependency-check.zip -d /usr/share/                                                        && \
     cd /usr/share/dependency-check/plugins                                                           && \
     curl -Os "https://jdbc.postgresql.org/download/postgresql-${POSTGRES_DRIVER_VERSION}.jar"        && \
