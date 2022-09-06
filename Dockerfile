@@ -1,14 +1,18 @@
 FROM openjdk:19-alpine
 
-ARG VERSION=7.1.1
+ARG VERSION=7.1.2
 ARG POSTGRES_DRIVER_VERSION=42.2.19
 ARG MYSQL_DRIVER_VERSION=8.0.23
 
 RUN apk update                                                                                       && \
     apk add --no-cache --virtual .build-deps curl tar git                                            && \
-    apk add --no-cache ruby ruby-rdoc                                                                && \
+    apk add --no-cache ruby ruby-rdoc npm                                                            && \
     gem install bundle-audit                                                                         && \
     bundle audit update                                                                              && \
+    mkdir /opt/yarn                                                                                  && \
+    curl -Ls https://yarnpkg.com/latest.tar.gz | tar -xz --strip-components=1 --directory /opt/yarn  && \
+    ln -s /opt/yarn/bin/yarn /usr/bin/yarn                                                           && \
+    npm install -g pnpm                                                                              && \
     wget https://github.com/jeremylong/DependencyCheck/releases/download/v${VERSION}/dependency-check-${VERSION}-release.zip -O dependency-check.zip && \
     unzip dependency-check.zip -d /usr/share/                                                        && \
     cd /usr/share/dependency-check/plugins                                                           && \
